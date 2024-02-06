@@ -1,0 +1,14 @@
+# Ignorar la configuración local
+config.ini
+
+# Ignorar el entorno virtual de python
+venv/
+
+# Ignorar la carpeta datos
+datos/
+
+# Ignorar el archivo html creado con python (tiene un nombre en específico definido en el script)
+grafico_curvas_plotly.html
+
+# Ignorar la configuracion del sonar
+sonar-project.properties
