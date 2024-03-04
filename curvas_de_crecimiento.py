@@ -573,7 +573,9 @@ def add_grafico_curva(fig, x, y, nombre, color_curva, hover_template, row, col):
             font_size=14,
             font_family="sans-serif",
         ),
-        hovertemplate=hover_template,
+        legendgroup=1, 
+        hovertemplate = None, # Modificaciones para desactivar el hover
+        hoverinfo = "skip", # Modificaciones para desactivar el hover
         showlegend=False
     )
     fig.add_trace(trace, row=row, col=col)
@@ -585,10 +587,12 @@ def add_puntos_datos(fig, x_data, y_data, color_map, line_color, name, text_data
         mode='lines+markers',
         marker=dict(size=8, color=color_map),
         line=dict(color=line_color),
+        legendgroup=3,
         name=name,
         hoverlabel=dict(font_size=16, font_family="Calibri, sans-serif"),
         hovertemplate="<b>%{text}</b><extra></extra>",
-        text=text_data
+        text=text_data,
+        showlegend=False
     )
     fig.add_trace(trace, row=row, col=col)
 
@@ -601,7 +605,8 @@ def add_puntos_datos_imc(fig, x_data, y_data, color_map, name, text_data, row, c
         name=name,
         hoverlabel=dict(font_size=16, font_family="Calibri, sans-serif"),
         hovertemplate="<b>%{text}</b><extra></extra>",
-        text=text_data
+        text=text_data,
+        showlegend=False
     )
     fig.add_trace(trace, row=row, col=col)
 
@@ -614,7 +619,8 @@ def add_puntos_ayuda(fig, x_data, y_data, color_linea, nombre, hover_template, r
         line=dict(color=color_linea),
         hoverlabel=dict(font_size=14, font_family="sans-serif"),
         hovertemplate=hover_template,
-        showlegend=False
+        showlegend=False,
+        visible=False
     )
     fig.add_trace(trace, row=row, col=col)
 
@@ -1202,7 +1208,7 @@ fig.update_yaxes(title_text="Peso (kg)", range=[11, 60],
                  row=fila_peso_5_10a, col=columna_peso_5_10a) 
 
 # Curvas talla 5-19 años
-fig.update_xaxes(title_text="Años", range=[4.9, 19.1], 
+fig.update_xaxes(title_text="Años", range=[4.95, 19.05], 
                  row=fila_talla_5_19a, col=columna_talla_5_19a) 
 fig.update_yaxes(title_text="Talla (cm)", range=[90, 190],
                  row=fila_talla_5_19a, col=columna_talla_5_19a) 
@@ -1296,7 +1302,10 @@ add_anotacion_figura(fig, "5 años", 60, 9, fila_imc_0_5, columna_imc_0_5)
 
 # Establecer el diseño general
 fig.update_layout(
-    title_text="Gráficos Interactivos",
+    title={
+        'text': "Gráficos Interactivos",
+        'x': 0.5,  # Centrar el título horizontalmente
+    },
     showlegend=True,
     height=2400,  # Altura
     width=1400, # Ancho
