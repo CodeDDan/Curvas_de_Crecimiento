@@ -1449,36 +1449,36 @@ add_puntos_ayuda(fig, fechas_imc_5_19, [polinomio_imc_mas2_5_19(fecha) for fecha
 # endregion
 # Personalizar la escala de cada subplot # Para que minor funcione sse debe quitar tickvals
 # Curvas peso 0-6 meses
-fig.update_xaxes(title_text="Meses", range=[-0.5, 6.5], 
+fig.update_xaxes(title_text="Meses", range=[-0.1, 6.1], 
                  row=fila_peso_0_6, col=columna_peso_0_6) 
 fig.update_yaxes(title_text="Peso (Kg)",  range=[1, 12], 
                  gridwidth=1, row=fila_peso_0_6, col=columna_peso_0_6) 
 # Curvas talla 0-6 meses
-fig.update_xaxes(title_text="Meses", range=[-0.5, 6.5], 
+fig.update_xaxes(title_text="Meses", range=[-0.1, 6.1], 
                  row=fila_talla_0_6, col=columna_talla_0_6) 
 fig.update_yaxes(title_text="Talla (cm)", range=[42, 75],
                  row=fila_talla_0_6, col=columna_talla_0_6) 
 
 # Curvas peso 6-24 meses
-fig.update_xaxes(title_text="Meses", range=[5.5, 24.5], 
+fig.update_xaxes(title_text="Meses", range=[5.9, 24.1], 
                  row=fila_peso_6_24, col=columna_peso_6_24) 
 fig.update_yaxes(title_text="Peso (Kg)", range=[5, 17.5],
                  row=fila_peso_6_24, col=columna_peso_6_24)  
 
 # Curvas talla 6-24 meses
-fig.update_xaxes(title_text="Meses", range=[5.5, 24.5], 
+fig.update_xaxes(title_text="Meses", range=[5.9, 24.1], 
                  row=fila_talla_6_24, col=columna_talla_6_24) 
 fig.update_yaxes(title_text="Talla (cm)", range=[55, 100],
                  row=fila_talla_6_24, col=columna_talla_6_24)  
 
 # Curvas peso 24-60 meses
-fig.update_xaxes(title_text="Meses", range=[23.5, 60.5], 
+fig.update_xaxes(title_text="Meses", range=[23.9, 60.1], 
                  row=fila_peso_24_60, col=columna_peso_24_60) 
 fig.update_yaxes(title_text="Peso (Kg)", range=[7, 30],
                  row=fila_peso_24_60, col=columna_peso_24_60)  
 
 # Curvas talla 24-60 meses
-fig.update_xaxes(title_text="Meses", range=[23.5, 60.5], 
+fig.update_xaxes(title_text="Meses", range=[23.9, 60.1], 
                  row=fila_talla_24_60, col=columna_talla_24_60) 
 fig.update_yaxes(title_text="Talla (cm)", range=[75, 125], 
                  row=fila_talla_24_60, col=columna_talla_24_60) 
@@ -1561,26 +1561,167 @@ def add_anotacion_figura(fig, texto, x, y, row, col):
         ), row=row, col=col
     )
 
+def add_anotacion_eje_y_figura(fig, texto, x, y, row, col, color_flecha="green", color_texto="green"):
+    fig.add_annotation(
+        go.layout.Annotation(
+            text=texto,
+            x=x,
+            y=y,
+            showarrow=True,
+            arrowhead=2,
+            ax=30,  # Cambiar a 30 para que la flecha sea horizontal apuntando hacia la izquierda
+            ay=0,
+            arrowcolor=color_flecha,  # Cambiar color de la flecha
+            font=dict(color=color_texto, size=14),  # Cambiar color del texto
+            xshift=0,  # Ajuste horizontal
+            yshift=0  # Ajuste vertical
+        ), row=row, col=col
+    )
+
+add_anotacion_eje_y_figura(fig, "Ideal", 6, polinomio_peso_0_6(6), fila_peso_0_6, columna_peso_0_6,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+2", 6, polinomio_peso_mas2_0_6(6), fila_peso_0_6, columna_peso_0_6,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 6, polinomio_peso_menos2_0_6(6), fila_peso_0_6, columna_peso_0_6,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 6, polinomio_peso_mas3_0_6(6), fila_peso_0_6, columna_peso_0_6,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 6, polinomio_peso_menos3_0_6(6), fila_peso_0_6, columna_peso_0_6,
+                           color_flecha="black", color_texto="black")
+
+add_anotacion_eje_y_figura(fig, "Ideal", 6, polinomio_talla_0_6(6), fila_talla_0_6, columna_talla_0_6,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+2", 6, polinomio_talla_mas2_0_6(6), fila_talla_0_6, columna_talla_0_6,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 6, polinomio_talla_menos2_0_6(6), fila_talla_0_6, columna_talla_0_6,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 6, polinomio_talla_mas3_0_6(6), fila_talla_0_6, columna_talla_0_6,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 6, polinomio_talla_menos3_0_6(6), fila_talla_0_6, columna_talla_0_6,
+                           color_flecha="black", color_texto="black")
+
+
 add_anotacion_figura(fig, "1 año", 12, 5, fila_peso_6_24, columna_peso_6_24)
 add_anotacion_figura(fig, "2 años", 24, 5, fila_peso_6_24, columna_peso_6_24)
+add_anotacion_eje_y_figura(fig, "Ideal", 24, polinomio_peso_6_24(24), fila_peso_6_24, columna_peso_6_24,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+2", 24, polinomio_peso_mas2_6_24(24), fila_peso_6_24, columna_peso_6_24,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 24, polinomio_peso_menos2_6_24(24), fila_peso_6_24, columna_peso_6_24,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 24, polinomio_peso_mas3_6_24(24), fila_peso_6_24, columna_peso_6_24,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 24, polinomio_peso_menos3_6_24(24), fila_peso_6_24, columna_peso_6_24,
+                           color_flecha="black", color_texto="black")
 
 add_anotacion_figura(fig, "2 años", 24, 7, fila_peso_24_60, columna_peso_24_60)
 add_anotacion_figura(fig, "3 años", 36, 7, fila_peso_24_60, columna_peso_24_60)
 add_anotacion_figura(fig, "4 años", 48, 7, fila_peso_24_60, columna_peso_24_60)
 add_anotacion_figura(fig, "5 años", 60, 7, fila_peso_24_60, columna_peso_24_60)
+add_anotacion_eje_y_figura(fig, "Ideal", 60, polinomio_peso_24_60(60), fila_peso_24_60, columna_peso_24_60,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+2", 60, polinomio_peso_mas2_24_60(60), fila_peso_24_60, columna_peso_24_60,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 60, polinomio_peso_menos2_24_60(60), fila_peso_24_60, columna_peso_24_60,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 60, polinomio_peso_mas3_24_60(60), fila_peso_24_60, columna_peso_24_60,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 60, polinomio_peso_menos3_24_60(60), fila_peso_24_60, columna_peso_24_60,
+                           color_flecha="black", color_texto="black")
 
 add_anotacion_figura(fig, "1 año", 12, 55, fila_talla_6_24, columna_talla_6_24)
 add_anotacion_figura(fig, "2 años", 24, 55, fila_talla_6_24, columna_talla_6_24)
+add_anotacion_eje_y_figura(fig, "Ideal", 24, polinomio_talla_6_24(24), fila_talla_6_24, columna_talla_6_24,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+2", 24, polinomio_talla_mas2_6_24(24), fila_talla_6_24, columna_talla_6_24,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 24, polinomio_talla_menos2_6_24(24), fila_talla_6_24, columna_talla_6_24,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 24, polinomio_talla_mas3_6_24(24), fila_talla_6_24, columna_talla_6_24,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 24, polinomio_talla_menos3_6_24(24), fila_talla_6_24, columna_talla_6_24,
+                           color_flecha="black", color_texto="black")
+
 add_anotacion_figura(fig, "2 años", 24, 75, fila_talla_24_60, columna_talla_24_60)
 add_anotacion_figura(fig, "3 años", 36, 75, fila_talla_24_60, columna_talla_24_60)
 add_anotacion_figura(fig, "4 años", 48, 75, fila_talla_24_60, columna_talla_24_60)
 add_anotacion_figura(fig, "5 años", 60, 75, fila_talla_24_60, columna_talla_24_60)
+add_anotacion_eje_y_figura(fig, "Ideal", 60, polinomio_talla_24_60(60), fila_talla_24_60, columna_talla_24_60,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+2", 60, polinomio_talla_mas2_24_60(60), fila_talla_24_60, columna_talla_24_60,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 60, polinomio_talla_menos2_24_60(60), fila_talla_24_60, columna_talla_24_60,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 60, polinomio_talla_mas3_24_60(60), fila_talla_24_60, columna_talla_24_60,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 60, polinomio_talla_menos3_24_60(60), fila_talla_24_60, columna_talla_24_60,
+                           color_flecha="black", color_texto="black")
+
+add_anotacion_eje_y_figura(fig, "Ideal", 10, polinomio_peso_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+1", 10, polinomio_peso_mas1_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+1", 10, polinomio_peso_menos1_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+2", 10, polinomio_peso_mas2_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 10, polinomio_peso_menos2_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 10, polinomio_peso_mas3_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 10, polinomio_peso_menos3_5_10a(10), fila_peso_5_10a, columna_peso_5_10a,
+                           color_flecha="black", color_texto="black")
+
+add_anotacion_eje_y_figura(fig, "Ideal", 19, polinomio_talla_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+1", 19, polinomio_talla_mas1_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+1", 19, polinomio_talla_menos1_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+2", 19, polinomio_talla_mas2_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 19, polinomio_talla_menos2_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 19, polinomio_talla_mas3_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 19, polinomio_talla_menos3_5_19a(19), fila_talla_5_19a, columna_talla_5_19a,
+                           color_flecha="black", color_texto="black")
+
 
 add_anotacion_figura(fig, "1 año", 12, 9, fila_imc_0_5, columna_imc_0_5)
 add_anotacion_figura(fig, "2 años", 24, 9, fila_imc_0_5, columna_imc_0_5)
 add_anotacion_figura(fig, "3 años", 36, 9, fila_imc_0_5, columna_imc_0_5)
 add_anotacion_figura(fig, "4 años", 48, 9, fila_imc_0_5, columna_imc_0_5)
 add_anotacion_figura(fig, "5 años", 60, 9, fila_imc_0_5, columna_imc_0_5)
+add_anotacion_eje_y_figura(fig, "Ideal", 60, polinomio_imc_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+1", 60, polinomio_imc_mas1_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+1", 60, polinomio_imc_menos1_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+2", 60, polinomio_imc_mas2_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 60, polinomio_imc_menos2_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 60, polinomio_imc_mas3_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 60, polinomio_imc_menos3_24_60(60), fila_imc_0_5, columna_imc_0_5,
+                           color_flecha="black", color_texto="black")
+
+add_anotacion_eje_y_figura(fig, "Ideal", 19, polinomio_imc_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha=color_ayuda_central, color_texto=color_ayuda_central)
+add_anotacion_eje_y_figura(fig, "+1", 19, polinomio_imc_mas1_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+1", 19, polinomio_imc_menos1_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha="rgba(209, 150, 0, 1)", color_texto="rgba(209, 150, 0, 1)")
+add_anotacion_eje_y_figura(fig, "+2", 19, polinomio_imc_mas2_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+2", 19, polinomio_imc_menos2_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha=color_ayuda_limite, color_texto=color_ayuda_limite)
+add_anotacion_eje_y_figura(fig, "+3", 19, polinomio_imc_mas3_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha="black", color_texto="black")
+add_anotacion_eje_y_figura(fig, "-3", 19, polinomio_imc_menos3_5_19(19), fila_imc_5_19, columna_imc_5_19,
+                           color_flecha="black", color_texto="black")
 
 # Establecer el diseño general
 fig.update_layout(
