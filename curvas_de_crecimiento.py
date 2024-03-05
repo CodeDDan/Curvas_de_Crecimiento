@@ -620,7 +620,7 @@ def add_puntos_ayuda(fig, x_data, y_data, color_linea, nombre, hover_template, r
         hoverlabel=dict(font_size=14, font_family="sans-serif"),
         hovertemplate=hover_template,
         showlegend=False,
-        visible=False
+        visible=False # Esta parte desactiva la función
     )
     fig.add_trace(trace, row=row, col=col)
 
@@ -660,7 +660,21 @@ fig.add_trace(go.Scatter(x=x_peso_0_6, y=curva_peso_mas2_0_6, fill='tonexty', fi
 fechas_peso_0_6 = [fecha for fecha, _ in datos_peso_menor_6]
 valores_peso_0_6 = [peso for _, peso in datos_peso_menor_6]
 mapa_color_peso_0_6 = [asignar_color(x, y, "peso") for x, y in datos_peso_menor_6]
-texto_hover_peso_0_6 = [f"Fecha: {fecha}<br>Peso: {peso} kg" for fecha, peso in zip(display_fecha_peso_0_6 , valores_peso_0_6)]
+texto_hover_peso_0_6 = []
+for fecha, peso, valor_fecha in zip(display_fecha_peso_0_6, valores_peso_0_6, fechas_peso_0_6):
+    if polinomio_peso_menos2_0_6(valor_fecha) <= peso <= polinomio_peso_mas2_0_6(valor_fecha):
+        estado = "Normal"
+    elif polinomio_peso_mas2_0_6(valor_fecha) <= peso <= polinomio_peso_mas3_0_6(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_peso_menos3_0_6(valor_fecha) <= peso <= polinomio_peso_menos2_0_6(valor_fecha):
+        estado = "Alerta"
+    elif peso > polinomio_peso_mas3_0_6(valor_fecha):
+        estado = "Sobrepeso"
+    elif peso < polinomio_peso_menos3_0_6(valor_fecha):
+        estado = "Desnutricion"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_peso_0_6.append(f"Fecha: {fecha}<br>Peso: {peso} kg<br>Estado: {estado}")
 
 # Puntos de datos de peso
 add_puntos_datos(fig, fechas_peso_0_6, valores_peso_0_6, mapa_color_peso_0_6, 'green', 'Datos peso 0-6 meses', 
@@ -711,7 +725,21 @@ fig.add_trace(go.Scatter(x=x_talla_0_6, y=curva_talla_mas2_0_6, fill='tonexty', 
 fechas_talla_0_6 = [fecha for fecha, _ in datos_talla_menor_6]
 valores_talla_0_6 = [talla for _, talla in datos_talla_menor_6]
 mapa_color_talla_0_6 = [asignar_color(x, y, "talla") for x, y in datos_talla_menor_6]
-texto_hover_talla_0_6 = [f"Fecha: {fecha}<br>Talla: {talla} cm" for fecha, talla in zip(display_fecha_talla_0_6 , valores_talla_0_6)]
+texto_hover_talla_0_6 = []
+for fecha, talla, valor_fecha in zip(display_fecha_talla_0_6, valores_talla_0_6, fechas_talla_0_6):
+    if polinomio_talla_menos2_0_6(valor_fecha) <= talla <= polinomio_talla_mas2_0_6(valor_fecha):
+        estado = "Normal"
+    elif polinomio_talla_menos3_0_6(valor_fecha) <= talla <= polinomio_talla_menos2_0_6(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas2_0_6(valor_fecha) <= talla <= polinomio_talla_mas3_0_6(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas3_0_6(valor_fecha) <= talla:
+        estado = "Gigantismo"
+    elif talla < polinomio_talla_menos3_0_6(valor_fecha):
+        estado = "Enanismo"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_talla_0_6.append(f"Fecha: {fecha}<br>Talla: {talla} cm<br>Estado: {estado}")
 
 add_puntos_datos(fig, fechas_talla_0_6, valores_talla_0_6, mapa_color_talla_0_6, 'green', 'Datos talla 0-6 meses', 
                  texto_hover_talla_0_6, fila_talla_0_6, columna_talla_0_6)
@@ -762,7 +790,21 @@ fig.add_trace(go.Scatter(x=x_peso_6_24, y=curva_peso_mas2_6_24, fill='tonexty', 
 fechas_peso_6_24 = [fecha for fecha, _ in datos_peso_entre_6_24]
 valores_peso_6_24 = [peso for _, peso in datos_peso_entre_6_24]
 mapa_color_peso_6_24 = [asignar_color(x, y, "peso") for x, y in datos_peso_entre_6_24]
-texto_hover_peso_6_24 = [f"Fecha: {fecha}<br>Peso: {peso} kg" for fecha, peso in zip(display_fecha_peso_6_24 , valores_peso_6_24)]
+texto_hover_peso_6_24 = []
+for fecha, peso, valor_fecha in zip(display_fecha_peso_6_24, valores_peso_6_24, fechas_peso_6_24):
+    if polinomio_peso_menos2_6_24(valor_fecha) <= peso <= polinomio_peso_mas2_6_24(valor_fecha):
+        estado = "Normal"
+    elif polinomio_peso_mas2_6_24(valor_fecha) <= peso <= polinomio_peso_mas3_6_24(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_peso_menos3_6_24(valor_fecha) <= peso <= polinomio_peso_menos2_6_24(valor_fecha):
+        estado = "Alerta"
+    elif peso > polinomio_peso_mas3_6_24(valor_fecha):
+        estado = "Sobrepeso"
+    elif peso < polinomio_peso_menos3_6_24(valor_fecha):
+        estado = "Desnutricion"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_peso_6_24.append(f"Fecha: {fecha}<br>Peso: {peso} kg<br>Estado: {estado}")
 
 # Puntos de datos de peso 6-24 meses
 add_puntos_datos(fig, fechas_peso_6_24, valores_peso_6_24, mapa_color_peso_6_24, 'green', 'Datos peso 6-24 meses', 
@@ -812,7 +854,21 @@ fig.add_trace(go.Scatter(x=x_talla_6_24, y=curva_talla_mas2_6_24, fill='tonexty'
 fechas_talla_6_24 = [fecha for fecha, _ in datos_talla_entre_6_24]
 valores_talla_6_24 = [talla for _, talla in datos_talla_entre_6_24]
 mapa_color_talla_6_24 = [asignar_color(x, y, "talla") for x, y in datos_talla_entre_6_24]
-texto_hover_talla_6_24 = [f"Fecha: {fecha}<br>Talla: {talla} cm" for fecha, talla in zip(display_fecha_talla_6_24 , valores_talla_6_24)]
+texto_hover_talla_6_24 = []
+for fecha, talla, valor_fecha in zip(display_fecha_talla_6_24, valores_talla_6_24, fechas_talla_6_24):
+    if polinomio_talla_menos2_6_24(valor_fecha) <= talla <= polinomio_talla_mas2_6_24(valor_fecha):
+        estado = "Normal"
+    elif polinomio_talla_menos3_6_24(valor_fecha) <= talla <= polinomio_talla_menos2_6_24(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas2_6_24(valor_fecha) <= talla <= polinomio_talla_mas3_6_24(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas3_6_24(valor_fecha) <= talla:
+        estado = "Gigantismo"
+    elif talla < polinomio_talla_menos3_6_24(valor_fecha):
+        estado = "Enanismo"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_talla_6_24.append(f"Fecha: {fecha}<br>Talla: {talla} cm<br>Estado: {estado}")
 
 add_puntos_datos(fig, fechas_talla_6_24, valores_talla_6_24, mapa_color_talla_6_24, 'green', 'Datos talla 6-24 meses', 
                  texto_hover_talla_6_24, fila_talla_6_24, columna_talla_6_24)
@@ -864,7 +920,21 @@ fig.add_trace(go.Scatter(x=x_peso_24_60, y=curva_peso_mas2_24_60, fill='tonexty'
 fechas_peso_24_60 = [fecha for fecha, _ in datos_peso_entre_24_60]
 valores_peso_24_60 = [peso for _, peso in datos_peso_entre_24_60]
 mapa_color_peso_24_60 = [asignar_color(x, y, "peso") for x, y in datos_peso_entre_24_60]
-texto_hover_peso_24_60 = [f"Fecha: {fecha}<br>Peso: {peso} kg" for fecha, peso in zip(display_fecha_peso_24_60 , valores_peso_24_60)]
+texto_hover_peso_24_60 = []
+for fecha, peso, valor_fecha in zip(display_fecha_peso_24_60, valores_peso_24_60, fechas_peso_24_60):
+    if polinomio_peso_menos2_24_60(valor_fecha) <= peso <= polinomio_peso_mas2_24_60(valor_fecha):
+        estado = "Normal"
+    elif polinomio_peso_mas2_24_60(valor_fecha) <= peso <= polinomio_peso_mas3_24_60(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_peso_menos3_24_60(valor_fecha) <= peso <= polinomio_peso_menos2_24_60(valor_fecha):
+        estado = "Alerta"
+    elif peso > polinomio_peso_mas3_24_60(valor_fecha):
+        estado = "Sobrepeso"
+    elif peso < polinomio_peso_menos3_24_60(valor_fecha):
+        estado = "Desnutricion"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_peso_24_60.append(f"Fecha: {fecha}<br>Peso: {peso} kg<br>Estado: {estado}")
 
 # Puntos de datos de peso 6-24 meses
 add_puntos_datos(fig, fechas_peso_24_60, valores_peso_24_60, mapa_color_peso_24_60, 'green', 'Datos peso 2-5 años', 
@@ -915,7 +985,21 @@ fig.add_trace(go.Scatter(x=x_talla_24_60, y=curva_talla_mas2_24_60, fill='tonext
 fechas_talla_24_60 = [fecha for fecha, _ in datos_talla_entre_24_60]
 valores_talla_24_60 = [talla for _, talla in datos_talla_entre_24_60]
 mapa_color_talla_24_60 = [asignar_color(x, y, "talla") for x, y in datos_talla_entre_24_60]
-texto_hover_talla_24_60 = [f"Fecha: {fecha}<br>Talla: {talla} cm" for fecha, talla in zip(display_fecha_talla_24_60 , valores_talla_24_60)]
+texto_hover_talla_24_60 = []
+for fecha, talla, valor_fecha in zip(display_fecha_talla_24_60, valores_talla_24_60, fechas_talla_24_60):
+    if polinomio_talla_menos2_24_60(valor_fecha) <= talla <= polinomio_talla_mas2_24_60(valor_fecha):
+        estado = "Normal"
+    elif polinomio_talla_menos3_24_60(valor_fecha) <= talla <= polinomio_talla_menos2_24_60(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas2_24_60(valor_fecha) <= talla <= polinomio_talla_mas3_24_60(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas3_24_60(valor_fecha) <= talla:
+        estado = "Gigantismo"
+    elif talla < polinomio_talla_menos3_24_60(valor_fecha):
+        estado = "Enanismo"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_talla_24_60.append(f"Fecha: {fecha}<br>Talla: {talla} cm<br>Estado: {estado}")
 
 add_puntos_datos(fig, fechas_talla_24_60, valores_talla_24_60, mapa_color_talla_24_60, 'green', 'Datos talla 2-5 años', 
                  texto_hover_talla_24_60, fila_talla_24_60, columna_talla_24_60)
@@ -960,13 +1044,51 @@ add_grafico_curva(fig, x_peso_5_10, curva_peso_mas3_5_10a, texto_curva_mas_tres,
 add_grafico_curva(fig, x_peso_5_10, curva_peso_menos3_5_10a, texto_curva_menos_tres, "black", formato_impresion_peso, 
                   fila_peso_5_10a, columna_peso_5_10a)
 
+# Agregar primero la curva inferior sin relleno para -1 a +1
+fig.add_trace(go.Scatter(x=x_peso_5_10, y=curva_peso_menos1_5_10a, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_peso_5_10a, col=columna_peso_5_10a)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=x_peso_5_10, y=curva_peso_mas1_5_10a, fill='tonexty', fillcolor=color_relleno_completo, 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_peso_5_10a, col=columna_peso_5_10a)
+
+# Agregar primero la curva inferior sin relleno para +1 +2
+fig.add_trace(go.Scatter(x=x_peso_5_10, y=curva_peso_mas1_5_10a, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_peso_5_10a, col=columna_peso_5_10a)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=x_peso_5_10, y=curva_peso_mas2_5_10a, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_peso_5_10a, col=columna_peso_5_10a)
+
+# Agregar primero la curva inferior sin relleno para -2 -1
+fig.add_trace(go.Scatter(x=x_peso_5_10, y=curva_peso_menos2_5_10a, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_peso_5_10a, col=columna_peso_5_10a)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=x_peso_5_10, y=curva_peso_menos1_5_10a, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_peso_5_10a, col=columna_peso_5_10a)
+
 # Puntos de datos e información 5-10 años - Peso
 
 # Ojo, dividir para 12 las fechas pues se presentan en meses
 fechas_peso_5_10a = [fecha / 12 for fecha, _ in datos_peso_entre_5_10a]
 valores_peso_5_10a = [peso for _, peso in datos_peso_entre_5_10a]
 mapa_color_peso_5_10a = [asignar_color(x, y, "peso") for x, y in datos_peso_entre_5_10a]
-texto_hover_peso_5_10a = [f"Fecha: {fecha}<br>Peso: {peso} kg" for fecha, peso in zip(display_fecha_peso_5_10a , valores_peso_5_10a)]
+texto_hover_peso_5_10a = []
+for fecha, peso, valor_fecha in zip(display_fecha_peso_5_10a, valores_peso_5_10a, fechas_peso_5_10a):
+    if polinomio_peso_menos2_5_10a(valor_fecha) <= peso <= polinomio_peso_mas2_5_10a(valor_fecha):
+        estado = "Normal"
+    elif polinomio_peso_mas2_5_10a(valor_fecha) <= peso <= polinomio_peso_mas3_5_10a(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_peso_menos3_5_10a(valor_fecha) <= peso <= polinomio_peso_menos2_5_10a(valor_fecha):
+        estado = "Alerta"
+    elif peso > polinomio_peso_mas3_5_10a(valor_fecha):
+        estado = "Sobrepeso"
+    elif peso < polinomio_peso_menos3_5_10a(valor_fecha):
+        estado = "Desnutricion"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_peso_5_10a.append(f"Fecha: {fecha}<br>Peso: {peso} kg<br>Estado: {estado}")
 
 # Puntos de datos de peso 6-24 meses
 add_puntos_datos(fig, fechas_peso_5_10a, valores_peso_5_10a, mapa_color_peso_5_10a, 'green', 'Datos peso 5-10 años', 
@@ -1013,11 +1135,50 @@ add_grafico_curva(fig, x_talla_5_19, curva_talla_mas3_5_19, texto_curva_mas_tres
 add_grafico_curva(fig, x_talla_5_19, curva_talla_menos3_5_19, texto_curva_menos_tres, 
                   "black", formato_impresion_talla, fila_talla_5_19a, columna_talla_5_19a)
 
+# Agregar primero la curva inferior sin relleno para -1 a +1
+fig.add_trace(go.Scatter(x=x_talla_5_19, y=curva_talla_menos1_5_19, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_talla_5_19a, col=columna_talla_5_19a)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=x_talla_5_19, y=curva_talla_mas1_5_19, fill='tonexty', fillcolor=color_relleno_completo, 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_talla_5_19a, col=columna_talla_5_19a)
+
+# Agregar primero la curva inferior sin relleno para +1 +2
+fig.add_trace(go.Scatter(x=x_talla_5_19, y=curva_talla_mas1_5_19, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_talla_5_19a, col=columna_talla_5_19a)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=x_talla_5_19, y=curva_talla_mas2_5_19, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_talla_5_19a, col=columna_talla_5_19a)
+
+# Agregar primero la curva inferior sin relleno para -2 -1
+fig.add_trace(go.Scatter(x=x_talla_5_19, y=curva_talla_menos2_5_19, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_talla_5_19a, col=columna_talla_5_19a)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=x_talla_5_19, y=curva_talla_menos1_5_19, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_talla_5_19a, col=columna_talla_5_19a)
+
+
 # Ojo, dividir para 12 las fechas pues se presentan en meses
 fechas_talla_5_19a = [fecha / 12 for fecha, _ in datos_talla_entre_5_19a]
 valores_talla_5_19a = [talla for _, talla in datos_talla_entre_5_19a]
 mapa_color_talla_5_19a = [asignar_color(x, y, "talla") for x, y in datos_talla_entre_5_19a]
-texto_hover_talla_5_19a = [f"Fecha: {fecha}<br>Talla: {talla} cm" for fecha, talla in zip(display_fecha_talla_5_19a , valores_talla_5_19a)]
+texto_hover_talla_5_19a = []
+for fecha, talla, valor_fecha in zip(display_fecha_talla_5_19a, valores_talla_5_19a, fechas_talla_5_19a):
+    if polinomio_talla_menos2_5_19a(valor_fecha) <= talla <= polinomio_talla_mas2_5_19a(valor_fecha):
+        estado = "Normal"
+    elif polinomio_talla_menos3_5_19a(valor_fecha) <= talla <= polinomio_talla_menos2_5_19a(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas2_5_19a(valor_fecha) <= talla <= polinomio_talla_mas3_5_19a(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_talla_mas3_5_19a(valor_fecha) <= talla:
+        estado = "Gigantismo"
+    elif talla < polinomio_talla_menos3_5_19a(valor_fecha):
+        estado = "Enanismo"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    texto_hover_talla_5_19a.append(f"Fecha: {fecha}<br>Talla: {talla} cm<br>Estado: {estado}")
 
 # Puntos de datos de talla 5 a 19 años
 add_puntos_datos(fig, fechas_talla_5_19a, valores_talla_5_19a, mapa_color_talla_5_19a, 'green', 'Datos talla 5-19 años', 
@@ -1075,6 +1236,32 @@ add_grafico_curva(fig, imc_valores_x, curva_imc_mas3_0_24, "IMC +3",
 add_grafico_curva(fig, imc_valores_x, curva_imc_menos3_0_24, "IMC -3", 
                   "black", formato_impresion_imc, fila_imc_0_5, columna_imc_0_5)
 
+# Relleno
+
+# Agregar primero la curva inferior sin relleno para -1 a +1
+fig.add_trace(go.Scatter(x=imc_valores_x, y=curva_imc_menos1_0_24, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_0_5, col=columna_imc_0_5)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x, y=curva_imc_mas1_0_24, fill='tonexty', fillcolor=color_relleno_completo, 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_0_5, col=columna_imc_0_5)
+
+# Agregar primero la curva inferior sin relleno para +1 +2
+fig.add_trace(go.Scatter(x=imc_valores_x, y=curva_imc_mas1_0_24, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_0_5, col=columna_imc_0_5)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x, y=curva_imc_mas2_0_24, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_0_5, col=columna_imc_0_5)
+
+# Agregar primero la curva inferior sin relleno para -2 -1
+fig.add_trace(go.Scatter(x=imc_valores_x, y=curva_imc_menos2_0_24, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_0_5, col=columna_imc_0_5)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x, y=curva_imc_menos1_0_24, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_0_5, col=columna_imc_0_5)
+
 add_grafico_curva(fig, imc_valores_x_24_60, curva_imc_24_60, "IMC 0 a 2 años", 
                   color_ayuda_central, formato_impresion_imc, fila_imc_0_5, columna_imc_0_5)
 add_grafico_curva(fig, imc_valores_x_24_60, curva_imc_mas1_24_60, "IMC +1", 
@@ -1090,11 +1277,66 @@ add_grafico_curva(fig, imc_valores_x_24_60, curva_imc_mas3_24_60, "IMC +3",
 add_grafico_curva(fig, imc_valores_x_24_60, curva_imc_menos3_24_60, "IMC -3", 
                   "black", formato_impresion_imc, fila_imc_0_5, columna_imc_0_5)
 
+# Agregar primero la curva inferior sin relleno para -1 a +1
+fig.add_trace(go.Scatter(x=imc_valores_x_24_60, y=curva_imc_menos1_24_60, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_0_5, col=columna_imc_0_5)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x_24_60, y=curva_imc_mas1_24_60, fill='tonexty', fillcolor=color_relleno_completo, 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_0_5, col=columna_imc_0_5)
+
+# Agregar primero la curva inferior sin relleno para +1 +2
+fig.add_trace(go.Scatter(x=imc_valores_x_24_60, y=curva_imc_mas1_24_60, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_0_5, col=columna_imc_0_5)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x_24_60, y=curva_imc_mas2_24_60, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_0_5, col=columna_imc_0_5)
+
+# Agregar primero la curva inferior sin relleno para -2 -1
+fig.add_trace(go.Scatter(x=imc_valores_x_24_60, y=curva_imc_menos2_24_60, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_0_5, col=columna_imc_0_5)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x_24_60, y=curva_imc_menos1_24_60, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_0_5, col=columna_imc_0_5)
+
 fechas_imc_0_5 = [fecha for fecha, _ in datos_imc_entre_0_5]
 valores_imc_0_5 = [imc for _, imc in datos_imc_entre_0_5]
 # mapa_color_imc_0_5 = [asignar_color(x, y, "imc") for x, y in datos_imc_entre_0_5]
-mapa_color_imc_0_5 = "black"
-texto_hover_imc_0_5 = [f"Fecha: {fecha}<br>IMC: {imc} kg/m^2" for fecha, imc in zip(display_fecha_imc_0_5, valores_imc_0_5)]
+mapa_color_imc_0_5 = "rgba(0, 0, 0, 0.75)"
+texto_hover_imc_0_5 = []
+
+for fecha, imc, valor_fecha in zip(display_fecha_imc_0_5, valores_imc_0_5, fechas_imc_0_5):
+    if valor_fecha <= 24:
+        if polinomio_imc_menos2_0_24(valor_fecha) <= imc <= polinomio_imc_mas2_0_24(valor_fecha):
+            estado = "Normal"
+        elif polinomio_imc_mas2_0_24(valor_fecha) <= imc <= polinomio_imc_mas3_0_24(valor_fecha):
+            estado = "Alerta"
+        elif polinomio_imc_menos3_0_24(valor_fecha) <= imc <= polinomio_imc_menos2_0_24(valor_fecha):
+            estado = "Alerta"
+        elif imc > polinomio_imc_mas3_0_24(valor_fecha):
+            estado = "IMC Alto"
+        elif imc < polinomio_imc_menos3_0_24(valor_fecha):
+            estado = "IMC Bajo"
+        else:
+            estado = "Desconocido"  # Para manejar cualquier otro caso
+    else:
+        if polinomio_imc_menos2_24_60(valor_fecha) <= imc <= polinomio_imc_mas2_24_60(valor_fecha):
+            estado = "Normal"
+        elif polinomio_imc_mas2_24_60(valor_fecha) <= imc <= polinomio_imc_mas3_24_60(valor_fecha):
+            estado = "Alerta"
+        elif polinomio_imc_menos3_24_60(valor_fecha) <= imc <= polinomio_imc_menos2_24_60(valor_fecha):
+            estado = "Alerta"
+        elif imc > polinomio_imc_mas3_24_60(valor_fecha):
+            estado = "IMC Alto"
+        elif imc < polinomio_imc_menos3_24_60(valor_fecha):
+            estado = "IMC Bajo"
+        else:
+            estado = "Desconocido"  # Para manejar cualquier otro caso
+    
+    texto_hover_imc_0_5.append(f"Fecha: {fecha}<br>IMC: {imc}<br>Estado: {estado}")
+
 
 # Puntos de datos de peso imc 0-5 años
 add_puntos_datos_imc(fig, fechas_imc_0_5, valores_imc_0_5, mapa_color_imc_0_5, 'Datos imc 0-5 años', 
@@ -1141,12 +1383,52 @@ add_grafico_curva(fig, imc_valores_x_5_19, curva_imc_mas3_5_19, "IMC +3",
 add_grafico_curva(fig, imc_valores_x_5_19, curva_imc_menos3_5_19, "IMC -3", 
                   "black", formato_impresion_imc, fila_imc_5_19, columna_imc_5_19)
 
+# Agregar primero la curva inferior sin relleno para -1 a +1
+fig.add_trace(go.Scatter(x=imc_valores_x_5_19, y=curva_imc_menos1_5_19, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_5_19, col=columna_imc_5_19)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x_5_19, y=curva_imc_mas1_5_19, fill='tonexty', fillcolor=color_relleno_completo, 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_5_19, col=columna_imc_5_19)
+
+# Agregar primero la curva inferior sin relleno para +1 +2
+fig.add_trace(go.Scatter(x=imc_valores_x_5_19, y=curva_imc_mas1_5_19, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_5_19, col=columna_imc_5_19)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x_5_19, y=curva_imc_mas2_5_19, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_5_19, col=columna_imc_5_19)
+
+# Agregar primero la curva inferior sin relleno para -2 -1
+fig.add_trace(go.Scatter(x=imc_valores_x_5_19, y=curva_imc_menos2_5_19, line=dict(color=color_relleno), 
+                         showlegend=False, hoverinfo='skip'), row=fila_imc_5_19, col=columna_imc_5_19)
+# Luego agregar la curva superior con relleno
+fig.add_trace(go.Scatter(x=imc_valores_x_5_19, y=curva_imc_menos1_5_19, fill='tonexty', fillcolor='rgba(252, 194, 3, 0.3)', 
+                         line=dict(color=color_relleno), showlegend=False, hoverinfo='skip'), 
+                         row=fila_imc_5_19, col=columna_imc_5_19)
+
 # Ojo, dividir para 12 las fechas pues se presentan en meses
 fechas_imc_5_19 = [fecha / 12 for fecha, _ in datos_imc_entre_5_19]
 valores_imc_5_19 = [imc for _, imc in datos_imc_entre_5_19]
 # mapa_color_imc_0_5 = [asignar_color(x, y, "imc") for x, y in datos_imc_entre_0_5]
-mapa_color_imc_5_19 = "black"
-texto_hover_imc_5_19 = [f"Fecha: {fecha}<br>IMC: {imc} kg/m^2" for fecha, imc in zip(display_fecha_imc_5_19, valores_imc_5_19)]
+mapa_color_imc_5_19 = "rgba(0, 0, 0, 0.75)"
+texto_hover_imc_5_19 = []
+
+for fecha, imc, valor_fecha in zip(display_fecha_imc_5_19, valores_imc_5_19, fechas_imc_5_19):
+    if polinomio_imc_menos2_5_19(valor_fecha) <= imc <= polinomio_imc_mas2_5_19(valor_fecha):
+        estado = "Normal"
+    elif polinomio_imc_mas2_5_19(valor_fecha) <= imc <= polinomio_imc_mas3_5_19(valor_fecha):
+        estado = "Alerta"
+    elif polinomio_imc_menos3_5_19(valor_fecha) <= imc <= polinomio_imc_menos2_5_19(valor_fecha):
+        estado = "Alerta"
+    elif imc > polinomio_imc_mas3_5_19(valor_fecha):
+        estado = "IMC Alto"
+    elif imc < polinomio_imc_menos3_5_19(valor_fecha):
+        estado = "IMC Bajo"
+    else:
+        estado = "Desconocido"  # Para manejar cualquier otro caso
+    
+    texto_hover_imc_5_19.append(f"Fecha: {fecha}<br>IMC: {imc}<br>Estado: {estado}")
 
 # Puntos de datos de peso imc 0-5 años
 add_puntos_datos_imc(fig, fechas_imc_5_19, valores_imc_5_19, mapa_color_imc_5_19, 'Datos imc 5-19 años', 
@@ -1216,7 +1498,7 @@ fig.update_yaxes(title_text="Talla (cm)", range=[90, 190],
 # minor=dict(ticklen=5, showgrid=True)
 
 # IMC 0-5 años
-fig.update_xaxes(title_text="Años", range=[-0.1, 60.1], 
+fig.update_xaxes(title_text="Meses", range=[-0.1, 60.1], 
                  row=fila_imc_0_5, col=columna_imc_0_5) 
 fig.update_yaxes(title_text="Índice de masa corporal (kg/m^2)", range=[9, 23], 
                  row=fila_imc_0_5, col=columna_imc_0_5)  
@@ -1303,7 +1585,7 @@ add_anotacion_figura(fig, "5 años", 60, 9, fila_imc_0_5, columna_imc_0_5)
 # Establecer el diseño general
 fig.update_layout(
     title={
-        'text': "Gráficos Interactivos",
+        'text': "Curvas de Crecimiento",
         'x': 0.5,  # Centrar el título horizontalmente
     },
     showlegend=True,
@@ -1314,4 +1596,5 @@ fig.update_layout(
 # endregion
 # Guardar el gráfico en un archivo HTML
 filename = 'grafico_curvas_plotly.html'
-pio.write_html(fig, file=filename, auto_open=False)
+# Para desactivar la barra de herramientas se incluye config
+pio.write_html(fig, file=filename, auto_open=False, config = {'displayModeBar': False})
